@@ -1,0 +1,52 @@
+{
+	"name": "whitelabel",
+	"i18n": {
+		"en-US": {
+			"label": "Whitelabel",
+			"description": "The Whitelabel app allows you to customize the UI.",
+			"extended_description": "С помощью приложения Whitelabel вы можете настроить многие аспекты пользовательского интерфейса, от изменения логотипа до управления шаблонами уведомлений по электронной почте. Это позволяет эффективно применять собственный брендинг и делать этот продукт самостоятельно.",
+			"features": [
+				"Add your own logo",
+				"Change all the link URLs",
+				"Choose a default language",
+				"Put your own company name",
+				"Customize the welcome message",
+				"Configure Porting & Carrier settings",
+				"Manage the templates for e-mail notifications"
+			]
+		},
+		"ru-RU": {
+			"label": "Whitelabel",
+			"description": "Приложение Whitelabel позволяет настроить пользовательский интерфейс.",
+			"extended_description": "Это позволяет эффективно применять свой собственный стержень и делают этот продукт самостоятельно. (например, попросить номер клиента, чтобы направить их по отдельности или аутентификации с базой данных)",
+			"features": [
+				"Добавить собственный логотип",
+				"Изменить все URL-ссылки",
+				"Изменить язык по-умолчанию",
+				"Указать собственное имя компании",
+				"Изменить сообщение-приветствие",
+				"Изменить Портирование и Carriers settings",
+				"Управлять шаблонами для уведоблений по email"
+			]
+		}
+	},
+	"tags": [
+		"carrier",
+		"developer"
+	],
+	"api_url": "",
+	"icon": "whitelabel.png",
+	"author": "",
+	"version": "1.0",
+	"license": "-",
+	"price": 0,
+	"screenshots": [
+		"screen_1.png",
+		"screen_2.png"
+	],
+	"urls": {
+		"documentation": "{documentation_url}",
+		"howto": "{howto_video_url}"
+	},
+	"pvt_type": "app"
+}
