@@ -4,7 +4,7 @@
 		"en-US": {
 			"label": "Whitelabel",
 			"description": "The Whitelabel app allows you to customize the UI.",
-			"extended_description": "С помощью приложения Whitelabel вы можете настроить многие аспекты пользовательского интерфейса, от изменения логотипа до управления шаблонами уведомлений по электронной почте. Это позволяет эффективно применять собственный брендинг и делать этот продукт самостоятельно.",
+			"extended_description": "With the Whitelabel app you can customize many aspects of the UI, from changing the logo to managing the e-mail notification templates. This allows you to effectively apply your own branding and make this product your own.",
 			"features": [
 				"Add your own logo",
 				"Change all the link URLs",
@@ -18,7 +18,7 @@
 		"ru-RU": {
 			"label": "Whitelabel",
 			"description": "Приложение Whitelabel позволяет настроить пользовательский интерфейс.",
-			"extended_description": "Это позволяет эффективно применять свой собственный стержень и делают этот продукт самостоятельно. (например, попросить номер клиента, чтобы направить их по отдельности или аутентификации с базой данных)",
+			"extended_description": "С помощью приложения Whitelabel вы можете настроить многие аспекты пользовательского интерфейса, от изменения логотипа до управления шаблонами уведомлений по электронной почте. Это позволяет эффективно применять собственный брендинг и делать продукт более персонализированным.",
 			"features": [
 				"Добавить собственный логотип",
 				"Изменить все URL-ссылки",
