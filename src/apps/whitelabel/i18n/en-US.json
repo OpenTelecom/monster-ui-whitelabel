@@ -1,5 +1,41 @@
 {
 	"whitelabel": {
+		"general": {
+			"title": "General UI Branding",
+			"logoLabel": "Company Logo",
+			"logoSize": "Maximum size: 192px by 62px",
+			"logoFormat": "Format: JPEG or PNG",
+			"faviconLabel": "Upload your icon",
+			"faviconSize": "Maximum size: 64px by 64px",
+			"companyNameLabel": "Company Name",
+			"companyWebsiteLabel": "Company Website Link",
+			"callReportEmail": "E-mail address for call reports",
+			"domainLabel": "Domain Name",
+			"languageLabel": "Language",
+			"helpLabel": "Help / Wiki Link",
+			"termsLabel": "Terms and Conditions Link",
+			"applicationTitle": "Browser Tab Name",
+			"poweredByLabel": "Powered by 2600hz",
+			"welcomeLabel": "Custom Welcome Message",
+			"realmSuffix": "Realm Suffix",
+			"realmSuffixHelp": "This suffix will be used to generate the account realms of accounts created via your white-labeled interface",
+			"resetBtnText": "Reset",
+			"saveInfoMessage": "Some changes will only take effect after reloading the application."
+
+		},
+		"advanced": {
+
+		},
+		"alertMessages": {
+			"logoWrongType": "Your logo must be in either a JPEG or PNG format.",
+			"logoWrongSize": "Your logo must not exceed 192px in width and 62px in height.",
+			"deleteConfirm": "This will completely delete both General and Advanced branding information. Do you want to continue?",
+			"closeTemplateConfirm": "Any unsaved change made to this template will be discarded. Do you want to continue?",
+			"templateUpdateSuccess": "Template updated successfully.",
+			"templatePreviewSuccess": "The notification preview has been sent to {{email_address}}",
+			"templateRestoreSuccess": "Template successfully restored to default.",
+			"iconWrongSize": "Your icon must not exceed 64px in width and 64px in height."
+		}
 
 	}
 }

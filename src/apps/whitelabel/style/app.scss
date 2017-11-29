@@ -1,3 +1,114 @@
 .whitelabel-container {
 
+	&.app-container {
+		padding-top: 20px;
+
+	}
+
+	.whitelabel-content > h1 {
+		font-size: 22px;
+		font-weight: normal;
+		color: #555;
+		margin-top: 0;
+		line-height: 1.2;
+		border-bottom: 1px solid #ddd;
+		padding-bottom: 13px;
+		margin-bottom: 25px;
+	}
+
+
+	.sidebar-menu {
+		ul {
+			list-style-type: none;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			border: 1px solid #DCDCDC;
+
+			li {
+				a {
+					color: #555;
+					display: block;
+					font-size: 16px;
+					position: relative;
+					padding: 15px 30px 15px 17px;
+					/*border: 1px solid #DCDCDC;*/
+					border-bottom: 1px solid #e3e3e3;
+					background: #f3f3f3;
+					background: -moz-linear-gradient(top, #f3f3f3 0%, #f7f7f7 49%, #ffffff 100%);
+					background: -webkit-linear-gradient(top, #f3f3f3 0%,#f7f7f7 49%,#ffffff 100%);
+					background: linear-gradient(to bottom, #f3f3f3 0%,#f7f7f7 49%,#ffffff 100%);
+					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#ffffff',GradientType=0 );
+
+					&.active,
+					&:hover {
+						background: #22A5FF;
+						color: white;
+						.fa {
+							color: white;
+						}
+
+						&::after {
+							content: '';
+							display: block;
+							width: 0;
+							height: 0;
+							border-style: solid;
+							border-width: 10px 0 10px 10px;
+							border-color: transparent transparent transparent #22A5FF;
+							position: absolute;
+							right: -10px;
+							top: 16px;
+						}
+					}
+
+					.fa {
+						color: #555;
+						margin-right: 10px;
+						font-size: 18px;
+					}
+
+
+				}
+
+				&:last-child a {
+					border-bottom: none;
+					border-radius: 0 0 4px 4px;
+				}
+
+				&:first-child a {
+					border-radius: 4px 4px 0 0;
+				}
+
+			}
+		}
+	}
+
+	.controls .file-upload {
+		margin-right: 10px;
+	}
+
+	.control-group .info-message-wrapper {
+		max-width: 350px;
+	}
+
+	.help-box .text-wrapper {
+		font-size: 14px;
+	}
+
+	.welcome-message-container {
+		margin-top: 20px;
+	}
+
+	.buttons-wrapper {
+		text-align: center;
+		width: 401px;
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+
+	.buttons-wrapper .btn {
+		margin-right: 10px;
+	}
+
 }

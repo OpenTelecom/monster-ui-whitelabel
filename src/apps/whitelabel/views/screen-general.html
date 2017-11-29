@@ -1,0 +1,167 @@
+<h1>{{ i18n.whitelabel.general.title }}</h1>
+
+<div class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label" for="company-logo">{{i18n.whitelabel.general.logoLabel}}</label>
+		<div class="controls">
+			<input id="company-logo" class="js-to-serialize" type="file" name="companyLogo" accept="image/*" />
+			<button class="btn btn-reset js-reset-logo" type="button">
+				<i class="fa fa-undo icon-small"></i>
+				&nbsp;{{ i18n.whitelabel.general.resetBtnText }}
+			</button>
+			<div class="help-block">
+				{{i18n.whitelabel.general.logoSize}}<br/>
+				{{i18n.whitelabel.general.logoFormat}}
+			</div>
+			{{#if logo}}
+				<div class="image-preview js-logo-preview" data-original-logo="{{logo}}" style="background-image:url({{logo}})"></div>
+			{{else}}
+				<div class="image-preview js-logo-preview empty"></div>
+			{{/if}}
+
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="company-logo">{{i18n.whitelabel.general.faviconLabel}}</label>
+		<div class="controls">
+			<input id="company_icon_input" type="file" name="companyIcon" accept="image/*">
+			<a href="" class="btn js-reset-favicon">
+				<i class="fa fa-undo icon-small"></i>
+				&nbsp;{{ i18n.whitelabel.general.resetBtnText }}
+			</a>
+			{{#if icon}}
+				<div class="image-preview js-favicon-preview" data-original-favicon="{{icon}}" style="background-image:url({{icon}})"></div>
+			{{else}}
+				<div class="image-preview js-favicon-preview empty"></div>
+			{{/if}}
+			<div class="help-block">
+				{{i18n.whitelabel.general.faviconSize}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<form id="general-form" class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label" for="company-name">{{i18n.whitelabel.general.companyNameLabel}}</label>
+		<div class="controls">
+			<input name="company_name" type="text" value="{{doc.company_name}}" class="js-to-serialize" id="company-name" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="company-website">{{i18n.whitelabel.general.companyWebsiteLabel}}</label>
+		<div class="controls">
+			<input name="nav.learn_more" type="text" value="{{doc.nav.learn_more}}" class="js-to-serialize" id="company-website" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="company-language">{{i18n.whitelabel.general.languageLabel}}</label>
+		<div class="controls">
+			<select name="language" class="js-to-serialize" id="company-language">
+				<option value="auto">{{i18n.languages.auto}}</option>
+				<option value="en-US">{{i18n.languages.americanEnglish}}</option>
+				<option value="fr-FR">{{i18n.languages.frenchFrench}}</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="call-report-email">{{i18n.whitelabel.general.callReportEmail}}</label>
+		<div class="controls">
+			<input value="{{doc.callReportEmail}}" name="callReportEmail" type="text" class="js-to-serialize" id="call-report-email" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="help-link">{{i18n.whitelabel.general.helpLabel}}</label>
+		<div class="controls">
+			<input name="nav.help" value="{{doc.nav.help}}" type="text" class="js-to-serialize" id="help-link" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="domain">{{i18n.whitelabel.general.domainLabel}}</label>
+		<div class="controls">
+			<input required name="domain" value="{{doc.domain}}" type="text" class="js-to-serialize" id="domain" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="terms-link">{{i18n.whitelabel.general.termsLabel}}</label>
+		<div class="controls">
+			<input name="port.terms" value="{{doc.port.terms}}" type="text" class="js-to-serialize" id="terms-link" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="realm-suffix">{{i18n.whitelabel.general.realmSuffix}}</label>
+		<div class="controls">
+			<input name="realm_suffix" type="text" class="js-to-serialize" id="realm-suffix"
+				data-toggle="tooltip"
+				title="{{i18n.generalBranding.realmSuffixHelp}}" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="browser-tab-name">{{i18n.whitelabel.general.applicationTitle}}</label>
+		<div class="controls">
+			<input name="applicationTitle" value="{{doc.applicationTitle}}" type="text" class="js-to-serialize" id="browser-tab-name" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label" for="custom-welcome-msg">{{i18n.whitelabel.general.welcomeLabel}}</label>
+		<div class="controls">
+			<input name="custom-welcome-msg" type="text" class="js-to-serialize" id="custom-welcome-msg" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">{{i18n.whitelabel.general.welcomeLabel}}</label>
+		<div class="controls">
+			{{#monsterSwitch}}
+				<input type="checkbox" id="custom_welcome" name="custom_welcome"
+					data-on="{{i18n.enabled}}" data-off="{{i18n.disabled}}" {{#if doc.custom_welcome}}checked{{/if}}>
+			{{/monsterSwitch}}
+			<div class="welcome-message-container" {{#unless doc.custom_welcome}}style="display:none"{{/unless}}>
+				<textarea id="custom_welcome_message" name="custom_welcome_message" rows="3"></textarea>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="control-group">
+		<span class="control-label"></span>
+		<div class="controls">
+			<div class="checkbox">
+				<label>
+					<input class="js-to-serialize" type="checkbox" name="hide_powered"
+					   {{#unless doc.hide_powered}}checked="checked"{{/unless}}>
+					{{i18n.whitelabel.general.poweredByLabel}}
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<span class="control-label"></span>
+		<div class="controls info-message-wrapper">
+			{{#monsterText}}
+				{{ i18n.whitelabel.general.saveInfoMessage}}
+			{{/monsterText}}
+		</div>
+	</div>
+
+	<div class="control-group">
+		<span class="control-label"></span>
+		<div class="controls">
+			{{#if brandingDoc.id}}
+				<button type="submit" class="btn btn-danger js-delete">{{i18n.delete}}</button>
+			{{/if}}
+			<button type="button" class="btn btn-primary js-save">{{i18n.save}}</button>
+		</div>
+	</div>
+</form>
