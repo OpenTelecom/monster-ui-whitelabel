@@ -14,9 +14,9 @@
 				{{i18n.whitelabel.general.logoFormat}}
 			</div>
 			{{#if logo}}
-				<div class="image-preview js-logo-preview" data-original-logo="{{logo}}" style="background-image:url({{logo}})"></div>
+				<div class="js-logo-preview logo-preview image-preview" data-original-logo="{{logo}}" style="background-image:url({{logo}})"></div>
 			{{else}}
-				<div class="image-preview js-logo-preview empty"></div>
+				<div class="js-logo-preview logo-preview image-preview image-empty"></div>
 			{{/if}}
 
 		</div>
@@ -30,14 +30,14 @@
 				<i class="fa fa-undo icon-small"></i>
 				&nbsp;{{ i18n.whitelabel.general.resetBtnText }}
 			</a>
-			{{#if icon}}
-				<div class="image-preview js-favicon-preview" data-original-favicon="{{icon}}" style="background-image:url({{icon}})"></div>
-			{{else}}
-				<div class="image-preview js-favicon-preview empty"></div>
-			{{/if}}
 			<div class="help-block">
 				{{i18n.whitelabel.general.faviconSize}}
 			</div>
+			{{#if icon}}
+				<div class="js-favicon-preview image-preview icon-preview" data-original-favicon="{{icon}}" style="background-image:url({{icon}})"></div>
+			{{else}}
+				<div class="js-favicon-preview image-preview icon-preview image-empty"></div>
+			{{/if}}
 		</div>
 	</div>
 </div>
@@ -100,8 +100,8 @@
 		<label class="control-label" for="realm-suffix">{{i18n.whitelabel.general.realmSuffix}}</label>
 		<div class="controls">
 			<input name="realm_suffix" type="text" class="js-to-serialize" id="realm-suffix"
-				data-toggle="tooltip"
-				title="{{i18n.generalBranding.realmSuffixHelp}}" />
+				data-toggle="tooltip" value="{{doc.realm_suffix}}"
+				title="{{i18n.whitelabel.general.realmSuffixHelp}}" />
 		</div>
 	</div>
 
@@ -109,13 +109,6 @@
 		<label class="control-label" for="browser-tab-name">{{i18n.whitelabel.general.applicationTitle}}</label>
 		<div class="controls">
 			<input name="applicationTitle" value="{{doc.applicationTitle}}" type="text" class="js-to-serialize" id="browser-tab-name" />
-		</div>
-	</div>
-
-	<div class="control-group">
-		<label class="control-label" for="custom-welcome-msg">{{i18n.whitelabel.general.welcomeLabel}}</label>
-		<div class="controls">
-			<input name="custom-welcome-msg" type="text" class="js-to-serialize" id="custom-welcome-msg" />
 		</div>
 	</div>
 

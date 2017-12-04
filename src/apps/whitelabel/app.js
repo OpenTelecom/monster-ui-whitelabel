@@ -132,7 +132,9 @@ define(function(require){
 
 			var $html = $(monster.template(self, 'screen-general',
 				$.extend(true, {
-					i18n: self.i18n.active()
+					i18n: self.i18n.active(),
+					logo: data.logo,
+					icon: data.icon
 				}, data)
 				));
 
@@ -157,12 +159,12 @@ define(function(require){
 				icon = null;
 
 			var resetLogo = function() {
-				var $logoPreview = $parent.find('.logo-preview');
+				var $logoPreview = $parent.find('.js-logo-preview');
 				var logoCSSurl = $logoPreview.data('original-logo') ? 'url(' + $logoPreview.data('original-logo') + ')' : '';
 				if (logoCSSurl) {
-					$logoPreview.css('background-image', logoCSSurl).toggleClass('empty', false);
+					$logoPreview.css('background-image', logoCSSurl).toggleClass('image-empty', false);
 				} else {
-					$logoPreview.css('background-image', 'none').toggleClass('empty', true);
+					$logoPreview.css('background-image', 'none').toggleClass('image-empty', true);
 				}
 				$parent.find('.js-reset-logo').hide();
 				$parent.find('.logo-upload-div .file-upload input').val('');
@@ -170,12 +172,12 @@ define(function(require){
 			};
 
 			var resetFavicon = function() {
-				var $faviconPreview = $parent.find('.favicon-preview');
+				var $faviconPreview = $parent.find('.js-favicon-preview');
 				var faviconCSSurl = $faviconPreview.data('original-favicon') ? 'url(' + $faviconPreview.data('original-favicon') + ')' : '';
 				if (faviconCSSurl) {
-					$faviconPreview.css('background-image', faviconCSSurl).toggleClass('empty', false);
+					$faviconPreview.css('background-image', faviconCSSurl).toggleClass('image-empty', false);
 				} else {
-					$faviconPreview.css('background-image', 'none').toggleClass('empty', true);
+					$faviconPreview.css('background-image', 'none').toggleClass('image-empty', true);
 				}
 				$parent.find('.js-reset-favicon').hide();
 				$parent.find('.favicon-upload-div .file-upload input').val('');
@@ -191,7 +193,7 @@ define(function(require){
 					var imageObj = new Image;
 					imageObj.onload = function(e) {
 						if (this.width <= 192 && this.height <= 62) {
-							$parent.find('.js-logo-preview').css('background-image', 'url(' + imageObj.src + ')').removeClass('empty');
+							$parent.find('.js-logo-preview').css('background-image', 'url(' + imageObj.src + ')').removeClass('image-empty');
 							$parent.find('.js-reset-logo').show();
 						} else {
 							monster.ui.alert('error', self.i18n.active().whitelabel.alertMessages.logoWrongSize);
@@ -220,7 +222,7 @@ define(function(require){
 
 					imageObj.onload = function(e) {
 						if (this.width <= 64 && this.height <= 64) {
-							$parent.find('.js-favicon-preview').css('background-image', 'url(' + imageObj.src + ')').removeClass('empty');
+							$parent.find('.js-favicon-preview').css('background-image', 'url(' + imageObj.src + ')').removeClass('image-empty');
 							$parent.find('.js-reset-favicon').show();
 						} else {
 							monster.ui.alert('error', self.i18n.active().alertMessages.faviconWrongSize);
@@ -235,8 +237,10 @@ define(function(require){
 				}
 			});
 
-			$parent.find('.reset-logo').on('click', resetLogo);
-			$parent.find('.reset-favicon').on('click', resetFavicon);
+			$parent.find('.js-reset-logo').on('click', resetLogo);
+
+			$parent.find('.js-reset-favicon').on('click', resetFavicon);
+
 			$parent.find('#custom_welcome').on('change', function() {
 				if ($(this).prop('checked')) {
 					$parent.find('.welcome-message-container').slideDown();
@@ -262,7 +266,7 @@ define(function(require){
 					self.callApi({
 						resource : 'whitelabel.delete',
 						data : {
-							accountId : data.accountId
+							accountId : self.accountId
 						},
 						success : function(textStatus) {
 							self.render();
@@ -279,9 +283,7 @@ define(function(require){
 			var self = this;
 
 			if(monster.ui.valid($form)) {
-
-				// TODO: research next string
-				var task = data.generalBrandingFormatData(self.ui.getFormData("general-form"), whitelabelData.doc);
+				var task = self.generalScreenFormatData(monster.ui.getFormData("general-form"), whitelabelData.doc);
 
 				self.callApi({
 					resource : whitelabelData.doc ? 'whitelabel.update' : 'whitelabel.create',
@@ -299,7 +301,7 @@ define(function(require){
 								self.callApi({
 									resource : 'whitelabel.updateLogo',
 									data : {
-										accountId : data.accountId,
+										accountId : self.accountId,
 										data : logo
 									},
 									success : function(feed) {
@@ -316,7 +318,7 @@ define(function(require){
 								self.callApi({
 									resource : 'whitelabel.updateIcon',
 									data : {
-										accountId : data.accountId,
+										accountId : self.accountId,
 										data : icon
 									},
 									success : function(feed) {
@@ -331,7 +333,7 @@ define(function(require){
 						if ($.isEmptyObject(obj)) {
 							callback();
 						} else {
-							self.parallel(obj, callback);
+							monster.parallel(obj, callback);
 						}
 					}
 				});
@@ -342,11 +344,11 @@ define(function(require){
 			settings.hide_powered = !settings.hide_powered;
 			settings = $.extend(true, {}, opts, settings);
 
-			if(settings.callReportEmail == '') {
+			if(settings.callReportEmail === '') {
 				delete settings.callReportEmail
 			}
 
-			if(settings.language == 'auto') {
+			if(settings.language === 'auto') {
 				delete settings.language
 			}
 
@@ -375,21 +377,23 @@ define(function(require){
 					});
 				},
 				logo: function (callback) {
-					self.callApi({
-						resource: 'whitelabel.getLogo',
-						data: {
-							accountId: self.accountId,
-							generateError: false
-						},
-						success: function (response) {
-							callback(null, response.data);
-						},
-						error: function(textStatus) {
-							if(typeof(callback) === 'function') {
-								callback(null, null);
+					var xmlhttp = new XMLHttpRequest;
+					var logoUrl = self.apiUrl + 'accounts/' + self.accountId + '/whitelabel/logo?auth_token=' + monster.util.getAuthToken();
+					xmlhttp.open('GET', logoUrl, true);
+					xmlhttp.onreadystatechange = function() {
+						if (4 === xmlhttp.readyState) {
+							if (200 === xmlhttp.status) {
+								if(typeof(callback) === 'function') {
+									callback(null, logoUrl);
+								}
+							} else {
+								if(typeof(callback) === 'function') {
+									callback(null, null);
+								}
 							}
 						}
-					});
+					};
+					xmlhttp.send();
 				},
 				icon: function (callback) {
 					self.callApi({
@@ -400,7 +404,10 @@ define(function(require){
 							dataType : "*"
 						},
 						success: function (response) {
-							callback(null, response.data);
+							var iconUrl = self.apiUrl + 'accounts/' + self.accountId + '/whitelabel/icon?auth_token=' + monster.util.getAuthToken();
+							if(typeof(callback) === 'function') {
+								callback(null, iconUrl);
+							}
 						},
 						error: function(textStatus) {
 							if(typeof(callback) === 'function') {
@@ -434,7 +441,6 @@ define(function(require){
 				if (results.doc
 					&& results.passwordRecovery
 					&& results.passwordRecovery.enabled === false) {
-					/** @type {boolean} */
 					results.doc.hidePasswordRecovery = true;
 				}
 

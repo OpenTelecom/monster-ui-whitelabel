@@ -5,7 +5,7 @@
 			"logoLabel": "Company Logo",
 			"logoSize": "Maximum size: 192px by 62px",
 			"logoFormat": "Format: JPEG or PNG",
-			"faviconLabel": "Upload your icon",
+			"faviconLabel": "Favicon",
 			"faviconSize": "Maximum size: 64px by 64px",
 			"companyNameLabel": "Company Name",
 			"companyWebsiteLabel": "Company Website Link",
@@ -21,7 +21,6 @@
 			"realmSuffixHelp": "This suffix will be used to generate the account realms of accounts created via your white-labeled interface",
 			"resetBtnText": "Reset",
 			"saveInfoMessage": "Some changes will only take effect after reloading the application."
-
 		},
 		"advanced": {
 
