@@ -1,0 +1,102 @@
+<h1>{{ i18n.whitelabel.advanced.title }}</h1>
+
+
+<form id="advanced-form" class="form-horizontal">
+	<div class="form-section">
+		<h2>{{i18n.whitelabel.advanced.porting.title}}</h2>
+
+		<div class="control-group">
+			<label class="control-label">{{i18n.whitelabel.advanced.porting.allowCustomerRequest.title}}</label>
+			<div class="controls radio-controls-wrapper">
+				<div>
+					{{#monsterRadio i18n.whitelabel.advanced.porting.allowCustomerRequest.no}}
+						<input type="radio" name="hide_port" value="true" {{#if doc.hide_port}}checked{{/if}}>
+					{{/monsterRadio}}
+				</div>
+				<div>
+					{{#monsterRadio i18n.whitelabel.advanced.porting.allowCustomerRequest.yes}}
+						<input type="radio" name="hide_port" value="false" {{#unless doc.hide_port}}checked{{/unless}}>
+					{{/monsterRadio}}
+				</div>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">{{i18n.whitelabel.advanced.porting.manageCustomerPorts.title}}</label>
+			<div class="controls radio-controls-wrapper">
+				<div>
+					{{#monsterRadio i18n.whitelabel.advanced.porting.manageCustomerPorts.no}}
+						<input type="radio" name="port.authority" value="" {{#unless doc.port.authority}}checked{{/unless}}>
+					{{/monsterRadio}}
+				</div>
+				<div>
+					{{#monsterRadio i18n.whitelabel.advanced.porting.manageCustomerPorts.yes}}
+					<input type="radio" name="port.authority" value="{{portAuthority}}" {{#if doc.port.authority}}checked{{/if}}>
+					{{/monsterRadio}}
+				</div>
+			</div>
+		</div>
+
+		<div class="js-advanced-port-info"{{#unless doc.port.authority}}style="display:none"{{/unless}}>
+			<div class="control-group">
+				<label class="control-label" for="port-loa">{{i18n.whitelabel.advanced.porting.loaLabel}}</label>
+				<div class="controls">
+					<input id="port-loa" type="text" name="port.loa" value="{{doc.port.loa}}" placeholder="{{i18n.whitelabel.advanced.porting.loaPlaceholder}}" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="port-support-email">{{i18n.whitelabel.advanced.porting.supportLabel}}</label>
+				<div class="controls">
+					<input id="port-support-email" type="email" name="port.support_email" value="{{doc.port.support_email}}" placeholder="{{i18n.whitelabel.advanced.porting.supportPlaceholder}}" />
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="port-resporg">{{i18n.whitelabel.advanced.porting.resporgLabel}}</label>
+				<div class="controls">
+					<input id="port-resporg" type="text" name="port.resporg" value="{{doc.port.resporg}}" placeholder="{{i18n.whitelabel.advanced.porting.resporgPlaceholder}}" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="form-section">
+		<h2>{{i18n.whitelabel.advanced.carrier.title}}</h2>
+
+		<div>
+			<div>{{i18n.whitelabel.advanced.carrier.choices.title}}</div>
+			<div>
+				<ul class="choices-list">
+					{{#each selectedChoices}}
+						<li class="js-choices-element js-clickable-box clickable-box choices-element" data-value="{{key}}">
+							{{#monsterCheckbox name}}
+								<input class="js-choices-element-ckb" type="checkbox" checked>
+							{{/monsterCheckbox}}
+						</li>
+					{{/each}}
+					{{#each unselectedChoices}}
+						<li class="js-choices-element js-flat-box flat-box choices-element" data-value="{{key}}">
+							{{#monsterCheckbox name}}
+								<input class="js-choices-element-ckb" type="checkbox">
+							{{/monsterCheckbox}}
+						</li>
+					{{/each}}
+				</ul>
+
+				{{#monsterText 'info' 'choices-list-help'}}
+					<p>{{ i18n.whitelabel.advanced.carrier.choices.help1 }}</p>
+					<p>{{ i18n.whitelabel.advanced.carrier.choices.help2 }}</p>
+				{{/monsterText}}
+			</div>
+		</div>
+	</div>
+	<div class="form-section">
+		{{#monsterText}}
+		{{i18n.whitelabel.saveInfoMessage}}
+		{{/monsterText}}
+
+		<div class="buttons-wrapper">
+			<button type="button" class="btn btn-primary js-save">{{i18n.save}}</button>
+		</div>
+	</div>
+</form>

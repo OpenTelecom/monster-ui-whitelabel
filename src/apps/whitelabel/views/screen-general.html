@@ -123,7 +123,6 @@
 				<textarea id="custom_welcome_message" name="custom_welcome_message" rows="3"></textarea>
 			</div>
 		</div>
-
 	</div>
 
 	<div class="control-group">
@@ -143,7 +142,7 @@
 		<span class="control-label"></span>
 		<div class="controls info-message-wrapper">
 			{{#monsterText}}
-				{{ i18n.whitelabel.general.saveInfoMessage}}
+				{{ i18n.whitelabel.saveInfoMessage}}
 			{{/monsterText}}
 		</div>
 	</div>
@@ -151,10 +150,12 @@
 	<div class="control-group">
 		<span class="control-label"></span>
 		<div class="controls">
-			{{#if brandingDoc.id}}
-				<button type="submit" class="btn btn-danger js-delete">{{i18n.delete}}</button>
-			{{/if}}
-			<button type="button" class="btn btn-primary js-save">{{i18n.save}}</button>
+			<div class="buttons-wrapper">
+				<button type="button" class="btn btn-primary js-save">{{i18n.save}}</button>
+				{{#if doc.id}}
+					<button type="submit" class="btn btn-danger js-delete">{{i18n.delete}}</button>
+				{{/if}}
+			</div>
 		</div>
 	</div>
 </form>

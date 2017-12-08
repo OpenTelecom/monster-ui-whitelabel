@@ -91,17 +91,35 @@ define(function(require){
 			});
 		},
 
-		render: function(_container) {
+		render: function(_container, tabKeyword) {
 			var self = this,
 				$container = _container || $('#monster_content');
+
+			if(typeof(tabKeyword) === 'undefined') {
+				tabKeyword = 'general';
+			}
 
 			var html = $(monster.template(self, 'main', {}));
 			$container.empty().append(html);
 
 			self.getWhiteLabelData(function(whitelabelData) {
-				self.renderWhitelabelTab('general', whitelabelData);
+				self.renderWhitelabelTab(tabKeyword, whitelabelData);
 			});
 
+			self.sidebarMenuInit();
+		},
+
+		sidebarMenuInit: function() {
+			var self = this;
+
+			$('.js-sidebar-menu-link').on('click', function(e) {
+				e.preventDefault();
+
+				var screenKeyword = $(this).data('screen');
+				self.getWhiteLabelData(function(whitelabelData) {
+					self.renderWhitelabelTab(screenKeyword, whitelabelData);
+				});
+			})
 		},
 
 		renderWhitelabelTab: function(tabKeyName, data) {
@@ -109,11 +127,12 @@ define(function(require){
 			var $parent = $('#whitelabel-content');
 
 			switch(tabKeyName) {
-				case 'general':
-					self.generalScreenRender(data, $parent);
+				case 'advanced':
+					self.advancedScreenRender(data, $parent);
 					break;
+				case 'general':
 				default:
-
+					self.generalScreenRender(data, $parent);
 			}
 
 			monster.ui.tooltips($parent, {
@@ -127,8 +146,9 @@ define(function(require){
 		generalScreenRender: function(data, $parent) {
 			var self = this;
 
-			$('.js-sidebar-menu-item').removeClass('active');
-			$('#general-screen-link').addClass('active');
+			$('.js-sidebar-menu-link')
+				.removeClass('active')
+				.filter('[data-screen="general"]').addClass('active');
 
 			var $html = $(monster.template(self, 'screen-general',
 				$.extend(true, {
@@ -145,11 +165,74 @@ define(function(require){
 					$parent.find("#custom_welcome_message").val(data.doc.custom_welcome_message);
 				}
 			}
-
-			// TODO: Is this necessary?
-			// self.ui.validate(template.find("#general-form"));
+			monster.ui.validate($("#general-form"));
 
 			self.generalScreenBindEvents($parent, data)
+		},
+
+		advancedScreenRender: function(data, $parent) {
+			var self = this;
+
+			$('.js-sidebar-menu-link')
+				.removeClass('active')
+				.filter('[data-screen="advanced"]').addClass('active');
+
+			var $html = $(monster.template(self, 'screen-advanced',
+				$.extend(true, {
+					i18n: self.i18n.active()
+				}, self.advancedScreenFormatData(data))
+			));
+
+			$parent.empty().append($html);
+
+			$parent.find(".choices-list").sortable({
+				items : ".choices-element.clickable-box",
+				cancel : ".choices-element.flat-box"
+			}).disableSelection();
+
+			monster.ui.validate($parent.find("#advanced-form"));
+
+			self.advancedScreenBindEvents($parent, data);
+		},
+
+		advancedScreenFormatData : function(data) {
+			var self = this;
+			var i18n = self.i18n.active().whitelabel;
+			var choices = [{
+				key : 'useBlended',
+				name : i18n.advanced.carrier.choices.list.useBlended
+			}, {
+				key : 'useReseller',
+				name : i18n.advanced.carrier.choices.list.useReseller
+			}, {
+				key : 'byoc',
+				name : i18n.advanced.carrier.choices.list.byoc
+			}];
+
+			var resultData = $.extend({
+				portAuthority : self.accountId,
+				selectedChoices : [],
+				unselectedChoices : []
+			}, data);
+
+			if(resultData.doc && resultData.doc.carrier && resultData.doc.carrier.choices) {
+				$.each(resultData.doc.carrier.choices, function(i, value) {
+					resultData.selectedChoices.push({
+						key : value,
+						name : i18n.advanced.carrier.choices.list[value]
+					});
+				});
+
+				$.each(choices, function(i, choice) {
+					if (resultData.doc.carrier.choices.indexOf(choice.key) < 0) {
+						resultData.unselectedChoices.push(choice);
+					}
+				});
+			} else {
+				resultData.selectedChoices = choices
+			}
+
+			return resultData;
 		},
 
 		generalScreenBindEvents: function($parent, whitelabelData) {
@@ -276,6 +359,67 @@ define(function(require){
 						}
 					});
 				});
+			});
+		},
+
+		advancedScreenBindEvents: function($parent, data) {
+			var self = this;
+
+			$parent.find('input[name="port.authority"]').on('change', function() {
+				if ($(this).val()) {
+					$parent.find('.js-advanced-port-info').show();
+				} else {
+					$parent.find('.js-advanced-port-info').hide();
+				}
+			});
+
+			$parent.find('.js-choices-element-ckb').on('change', function(e) {
+				var $target = $(this);
+				var $container = $target.parents('.js-choices-element');
+
+				if ($container.hasClass('js-clickable-box') && $parent.find('.js-choices-element.js-clickable-box').length <= 1) {
+					$target.prop('checked', true);
+				} else {
+					var $table = src.find('.js-choices-element.js-flat-box:first');
+					if ($table.length) {
+						$table.before($container);
+					} else {
+						$parent.find('.js-choices-element.js-clickable-box:last').after($container);
+					}
+					$container.toggleClass('js-flat-box').toggleClass('js-clickable-box');
+				}
+			});
+
+			$parent.find('.js-save').on('click', function(e) {
+				e.preventDefault();
+				if (monster.ui.valid($parent.find('#advanced-form'))) {
+					var formData = monster.ui.getFormData('advanced-form');
+					var resultData = $.extend(true, {}, data.doc, formData);
+					resultData.hide_port = 'true' === resultData.hide_port;
+					if (!resultData.carrier) {
+						resultData.carrier = {};
+					}
+					resultData.carrier.choices = $parent.find('.choices-element.clickable-box').map(function() {
+						return $(this).data('value');
+					}).get();
+
+					if(resultData.port.authority === '') {
+						delete resultData.port.loa;
+						delete resultData.port.resporg;
+						delete resultData.port.support_email;
+					}
+
+					self.callApi({
+						resource : 'whitelabel.update',
+						data : {
+							accountId : self.accountId,
+							data : resultData
+						},
+						success : function(textStatus) {
+							self.render(null, 'advanced');
+						}
+					});
+				}
 			});
 		},
 

@@ -10,12 +10,22 @@
 		font-weight: normal;
 		color: #555;
 		margin-top: 0;
-		line-height: 1.2;
+		line-height: 1;
 		border-bottom: 1px solid #ddd;
-		padding-bottom: 13px;
-		margin-bottom: 25px;
+		padding-bottom: 7px;
+		margin-bottom: 15px;
 	}
 
+	.whitelabel-content h2 {
+		font-size: 19px;
+		font-weight: normal;
+		color: #555;
+		margin-top: 0;
+		line-height: 1.2;
+		border-bottom: 1px solid #ddd;
+		padding-bottom: 7px;
+		margin-bottom: 13px;
+	}
 
 	.sidebar-menu {
 		ul {
@@ -67,8 +77,6 @@
 						margin-right: 10px;
 						font-size: 18px;
 					}
-
-
 				}
 
 				&:last-child a {
@@ -79,7 +87,6 @@
 				&:first-child a {
 					border-radius: 4px 4px 0 0;
 				}
-
 			}
 		}
 	}
@@ -101,10 +108,7 @@
 	}
 
 	.buttons-wrapper {
-		text-align: center;
-		width: 401px;
-		padding-top: 20px;
-		padding-bottom: 20px;
+		margin-bottom: 15px;
 	}
 
 	.buttons-wrapper .btn {
@@ -113,6 +117,54 @@
 
 	form label.error {
 		color: red;
+	}
+
+	form .form-section {
+		margin-bottom: 15px;
+		padding-left: 40px;
+	}
+
+	form .form-section > h2 {
+		margin-left: -20px;
+	}
+
+	form .form-section .radio-controls-wrapper {
+
+	}
+
+	.help-box {
+		max-width: 668px;
+		margin-bottom: 20px
+	}
+
+	.choices-list {
+		list-style: none;
+		padding: 11px 0 5px;
+		margin-bottom: 0;
+		margin-left: 0;
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.choices-list .choices-element {
+		margin-bottom: 6px;
+	}
+
+	.choices-element.clickable-box {
+		background: #EEEEEE;
+		padding: 10px 15px;
+		border-radius: 7px;
+	}
+
+	.choices-list-help {
+		display: inline-block;
+		vertical-align: top;
+		margin: 12px 0 0 30px;
+		max-width: 300px;
+	}
+
+	.form-vertical .control-label {
+		font-size: 16px;
 	}
 
 	.image-preview {

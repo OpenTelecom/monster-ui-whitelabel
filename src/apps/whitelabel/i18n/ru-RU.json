@@ -19,11 +19,42 @@
 			"welcomeLabel": "Custom Welcome Message",
 			"realmSuffix": "Realm Suffix",
 			"realmSuffixHelp": "This suffix will be used to generate the account realms of accounts created via your white-labeled interface",
-			"resetBtnText": "Reset",
-			"saveInfoMessage": "Some changes will only take effect after reloading the application."
+			"resetBtnText": "Reset"
 		},
 		"advanced": {
-
+			"title": "Advanced Branding",
+			"porting": {
+				"title": "Number Porting",
+				"allowCustomerRequest": {
+					"title": "Submitting port requests:",
+					"yes": "Allow customers to request a port",
+					"no": "I will request ports on behalf of customers"
+				},
+				"manageCustomerPorts": {
+					"title": "Managing port requests:",
+					"yes": "I will manage port requests from my account",
+					"no": "My provider will manage port requests from my account"
+				},
+				"supportLabel": "Support Contact",
+				"supportPlaceholder": "support@domain.com",
+				"loaLabel": "Letter of Authorization",
+				"loaPlaceholder": "http://mycompany.com/loa",
+				"resporgLabel": "Resporg",
+				"resporgPlaceholder": "http://mycompany.com/resporg"
+			},
+			"carrier": {
+				"title": "Carrier",
+				"choices": {
+					"title": "Choices available to the user to setup the no_match route:",
+					"list": {
+						"useBlended": "Use Global Resources",
+						"useReseller": "Use Reseller Resources",
+						"byoc": "Bring Your Own Carrier"
+					},
+					"help1": "The first option is will be the one set by default in the account.",
+					"help2": "Enabling more than one option will let the user customize this setting."
+				}
+			}
 		},
 		"alertMessages": {
 			"logoWrongType": "Your logo must be in either a JPEG or PNG format.",
@@ -34,7 +65,7 @@
 			"templatePreviewSuccess": "The notification preview has been sent to {{email_address}}",
 			"templateRestoreSuccess": "Template successfully restored to default.",
 			"iconWrongSize": "Your icon must not exceed 64px in width and 64px in height."
-		}
-
+		},
+		"saveInfoMessage": "Some changes will only take effect after reloading the application."
 	}
 }
