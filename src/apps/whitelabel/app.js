@@ -1,6 +1,7 @@
 define(function(require){
 	var $ = require('jquery'),
-		monster = require('monster');
+		monster = require('monster'),
+		assert = require("toastr");
 
 	require([
 		'fileupload'
@@ -130,6 +131,10 @@ define(function(require){
 				case 'advanced':
 					self.advancedScreenRender(data, $parent);
 					break;
+				case 'templates':
+					self.templatesScreenRender(data, $parent);
+					break;
+				case 'dns':
 				case 'general':
 				default:
 					self.generalScreenRender(data, $parent);
@@ -146,9 +151,7 @@ define(function(require){
 		generalScreenRender: function(data, $parent) {
 			var self = this;
 
-			$('.js-sidebar-menu-link')
-				.removeClass('active')
-				.filter('[data-screen="general"]').addClass('active');
+			self.menuSetActiveItem('general');
 
 			var $html = $(monster.template(self, 'screen-general',
 				$.extend(true, {
@@ -170,12 +173,477 @@ define(function(require){
 			self.generalScreenBindEvents($parent, data)
 		},
 
+		templatesScreenRender: function(whitelabelData, $parent) {
+			var self = this;
+			$parent = $parent ? $parent : $('#whitelabel-content');
+
+			self.menuSetActiveItem('templates');
+			self.templatesScreenGetList(function(templates){
+				var $html = $(monster.template(self, 'screen-templates', {
+					i18n: self.i18n.active(),
+					whitelabelTemplates: self.templatesScreenFormatData(templates)
+				}));
+				$parent.empty().append($html);
+				monster.ui.tooltips($parent);
+				self.templatesScreenBindEvents({
+					container: $parent,
+					templates: templates,
+					whitelabelData: whitelabelData
+				});
+			});
+		},
+
+		templatesScreenFormatData: function(data) {
+			var result = [];
+
+			$.each(data, function(categoryKey, categoryData) {
+				var arr = $.map(categoryData.templates, function(value, key) {
+					return $.extend(true, {
+						templateKey : key
+					}, value);
+				});
+
+				result.push({
+					categoryKey: categoryKey,
+					categoryName: categoryData.categoryName,
+					templates: arr.sort(function (a, b) {
+						var aName = a.templateName.toLowerCase();
+						var bName = b.templateName.toLowerCase();
+						return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+					})
+				});
+			});
+
+			result.sort(function (a, b) {
+				var aName = a.categoryName.toLowerCase();
+				var bName = b.categoryName.toLowerCase();
+				return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+			});
+
+			return result;
+		},
+
+		templatesScreenGetList: function(callback) {
+			var self = this;
+			var templateList = {};
+			self.callApi({
+				resource : 'whitelabel.listNotifications',
+				data : {
+					accountId : self.accountId
+				},
+				success : function(response, textStatus) {
+					if(response.data && response.data.length) {
+						var i18n = self.i18n.active().whitelabel;
+
+						$.each(response.data, function(i, options) {
+							if(!options.hasOwnProperty('category')) {
+								options.category = 'misc';
+							}
+							if(!templateList.hasOwnProperty(options.category)) {
+								templateList[options.category] = {
+									categoryName : i18n.templates.templateCategories[options.category] || options.category,
+									templates : {}
+								};
+							}
+							templateList[options.category].templates[options.id] = {
+								templateName : i18n.templates.templateNames[options.id] || (options.friendly_name || options.id),
+								status : options.hasOwnProperty('enabled') && options.enabled === false ? 'disabled' : options.account_overridden ? 'custom' : 'default',
+								macros : options.macros
+							};
+						});
+						if(typeof(callback) === 'function') {
+							callback(templateList);
+						}
+					}
+				}
+			});
+		},
+
+		templatesScreenBindEvents: function(args) {
+			var self = this;
+			var $container = args.container;
+			var templates = args.templates;
+			var whitelabelData = args.whitelabelData;
+
+			$container.find('.js-category-header').on('click', function() {
+				var $el = $(this);
+				$el.parents('.js-category-container').toggleClass('open');
+				$el.find('i').toggleClass('fa-caret-down').toggleClass('fa-caret-right');
+				$el.siblings('.js-category-content').stop().slideToggle();
+			});
+
+			$container.find('.js-template-header').on('click', function() {
+				var $templateItem = $(this).parents('.js-template-container');
+				var tpl = $templateItem.data('template');
+				var category = $templateItem.parents('.js-category-container').data('category');
+				self.templatesScreenTemplateEditionRender({
+					container: $templateItem,
+					templateBaseData: templates[category].templates[tpl],
+					whitelabelData: whitelabelData
+				});
+			});
+		},
+
+		templatesScreenTemplateEditionRender: function(args){
+			var self = this;
+
+			var $container = args.container;
+			var templateBaseData = args.templateBaseData;
+			var whitelabelData = args.whitelabelData;
+			var templateKeyword = $container.data('template');
+
+			self.templatesScreenGetTemplate(templateKeyword, function(notificationData) {
+				var actual = $.extend(true, {
+					templateKey : templateKeyword
+				}, templateBaseData, notificationData);
+
+				var $html = $(monster.template(self, 'template-content',
+					self.templatesScreenTemplateEditionFormatData(actual)));
+				var menuItems = [];
+
+				$.each(templateBaseData.macros, function(i, data) {
+					menuItems.push({
+						text : data.friendly_name,
+						args : i
+					});
+				});
+
+				monster.ui.tooltips($html);
+
+				$html.find('#' + templateKeyword + '_text_body').val(notificationData.text);
+				$container.find('.js-template-header').hide();
+				$container.find('.js-template-content').empty().append($html).show();
+
+				monster.ui.wysiwyg($container.find('.js-wysiwyg-container'), {
+					macro : {
+						options : menuItems
+					}
+				}).html(notificationData.html);
+
+				$container.toggleClass('open', true);
+
+				if($html.offset()) {
+					$('html, body').animate({
+						scrollTop : $html.offset().top - 30
+					}, 300);
+				}
+
+				self.templatesScreenTemplateEditionBindEvents($.extend(true, {
+					template : $html,
+					templateData : notificationData,
+					templateKey : templateKeyword,
+					whitelabelData : whitelabelData
+				}, args));
+			});
+		},
+
+		templatesScreenTemplateEditionFormatData: function(data){
+			data.data.to.email_addresses = data.data.to.email_addresses.join(', ');
+			data.data.bcc.email_addresses = data.data.bcc.email_addresses.join(', ');
+			return data;
+		},
+
+		templatesScreenGetTemplate: function(templateName, callback){
+			var self = this;
+			var message = {
+				to: {
+					type : 'original',
+					email_addresses : []
+				},
+				bcc: {
+					type : 'specified',
+					email_addresses : []
+				},
+				from: '',
+				subject: '',
+				enabled: true,
+				template_charset: 'utf-8'
+			};
+
+			self.callApi({
+				resource : 'whitelabel.getNotification',
+				data : {
+					accountId : self.accountId,
+					notificationId : templateName
+				},
+				success : function(response, textStatus) {
+					monster.parallel({
+						text : function(callback) {
+							self.callApi({
+								resource : "whitelabel.getNotificationText",
+								data : {
+									accountId : self.accountId,
+									notificationId : templateName
+								},
+								success : function(resp, textStatus) {
+									if(typeof(callback) === 'function') {
+										callback(null, resp);
+									}
+								},
+								error : function(textStatus, jqXHR) {
+									if(typeof(callback) === 'function') {
+										callback(null, null);
+									}
+								}
+							});
+						},
+						html : function(callback) {
+							self.callApi({
+								resource : 'whitelabel.getNotificationHtml',
+								data : {
+									accountId : self.accountId,
+									notificationId : templateName
+								},
+								success : function(feed, textStatus) {
+									if(typeof(callback) === 'function') {
+										callback(null, feed);
+									}
+								},
+								error : function(textStatus, jqXHR) {
+									if(typeof(callback) === 'function') {
+										callback(null, null);
+									}
+								}
+							});
+						}
+					}, function(err, result) {
+						result.data = $.extend(true, message, response.data);
+						if(typeof(callback) === 'function') {
+							callback(result);
+						}
+					});
+				},
+				error : function(textStatus, jqXHR) {
+					if(typeof(callback) === 'function') {
+						callback({
+							data : message
+						});
+					}
+				}
+			});
+		},
+
+		templatesScreenTemplateEditionBindEvents: function(args){
+			var self = this;
+			var $template = args.template;
+			var templateData = args.templateData;
+			var templateKeyword = args.templateKey;
+			var whitelabelData = args.whitelabelData;
+
+			var show = function(updateScreen) {
+				if (updateScreen) {
+					self.templatesScreenRender(whitelabelData);
+				} else {
+					args.container.toggleClass('open', false);
+					args.container.find('.js-template-content').empty().hide();
+					args.container.find('.js-template-header').show();
+				}
+			};
+
+			var getFormattedFormData = function() {
+				var data = monster.ui.getFormData(templateKeyword + '_form');
+				var toEmails = data.to.email_addresses.trim().replace(/[;\s,]+/g, ',');
+				var bccEmails = data.bcc.email_addresses.trim().replace(/[;\s,]+/g, ',');
+				data.to.type = $template.find('.to-group .recipient-radio.active').data('value');
+				data.to.email_addresses = toEmails.length ? toEmails.split(',') : [];
+				data.bcc.type = $template.find('.bcc-group .recipient-radio.active').data('value');
+				data.bcc.email_addresses = bccEmails.length ? bccEmails.split(',') : [];
+				return $.extend(true, {}, templateData.data, data);
+			};
+
+			var $switch = $template.find('.js-switch');
+
+			$switch.on('change', function() {
+				$template.find('.content').toggleClass('disabled', !$(this).prop('checked'));
+			});
+
+			$template.find('.recipient-radio').on('click', function() {
+				var $el = $(this);
+				$el.closest('.js-form-group').find('input').prop('disabled', 'specified' != $el.data('value'));
+			});
+
+			$template.find('.macro-element').on('click', function() {
+				var $el = $(this);
+				var textarea = $template.find($el.data('target'));
+				var endPos = textarea[0].selectionEnd;
+				var str = textarea.val();
+				textarea.val(str.substr(0, endPos) + "{{" + $el.data('macro') + '}}' + str.substr(endPos));
+				textarea.focus();
+			});
+
+			$template.find('.body-tabs a').on('click', function(e) {
+				e.preventDefault();
+				$(this).tab('show');
+			});
+
+			$template.find('.js-preview-email-send').on('click', function() {
+				var params = getFormattedFormData();
+				var emailAddress = $template.find('#' + templateKeyword + '_preview_recipient').val();
+				params.bcc.type = 'specified';
+				params.bcc.email_addresses = [];
+				params.to.type = "specified";
+				params.to.email_addresses = [emailAddress];
+				params.plain = $template.find('#' + templateKeyword + '_text_body').val();
+				params.html = btoa($template.find('.wysiwyg-editor').cleanHtml());
+				self.callApi({
+					resource : 'whitelabel.previewNotification',
+					data : {
+						accountId : self.accountId,
+						notificationId : templateKeyword,
+						data : params
+					},
+					success : function(textStatus, products) {
+						assert.success(monster.template(self, '!' + self.i18n.active().whitelabel.alertMessages.templatePreviewSuccess, {
+							email_address : emailAddress
+						}));
+					}
+				});
+			});
+
+			$template.find('.action-bar .restore').on('click', function() {
+				monster.ui.confirm(self.i18n.active().whitelabel.templates.restoreWarning, function() {
+					self.callApi({
+						resource : 'whitelabel.deleteNotification',
+						data : {
+							accountId : self.accountId,
+							notificationId : templateKeyword
+						},
+						success : function(textStatus, products) {
+							self.whitelabelDataGet(function(data) {
+								data.data.hidePasswordRecovery = false;
+								self.whitelabelDataUpdate(data.data, function(data) {
+									whitelabelData.doc = data.data;
+								});
+							});
+							show(true);
+							assert.success(self.i18n.active().whitelabel.alertMessages.templateRestoreSuccess);
+						}
+					});
+				});
+			});
+
+			$template.find(".js-save").on("click", function() {
+				if($switch.prop("checked")) {
+					var item = getFormattedFormData();
+					item.enabled = true;
+					self.callApi({
+						resource : "whitelabel.updateNotification",
+						data : {
+							accountId: self.accountId,
+							notificationId: templateKeyword,
+							data: item
+						},
+						success : function(textStatus, products) {
+							self.callApi({
+								resource : "whitelabel.updateNotificationHtml",
+								data : {
+									accountId : self.accountId,
+									notificationId : templateKeyword,
+									data : $template.find(".wysiwyg-editor").cleanHtml()
+								},
+								success : function(textStatus, products) {
+									self.callApi({
+										resource : "whitelabel.updateNotificationText",
+										data : {
+											accountId: self.accountId,
+											notificationId: templateKeyword,
+											data: $template.find('#' + templateKeyword + '_text_body').val()
+										},
+										success : function(textStatus, products) {
+											show(true);
+											assert.success(self.i18n.active().whitelabel.alertMessages.templateUpdateSuccess);
+										}
+									});
+								}
+							});
+							if('password_recovery' === templateKeyword) {
+								self.whitelabelDataGet(function(data) {
+									data.data.hidePasswordRecovery = false;
+
+									self.whitelabelDataUpdate(data.data, function(data) {
+										whitelabelData.doc = data.data;
+									});
+								});
+							}
+						}
+					});
+				} else {
+					if (templateData.data.enabled) {
+						templateData.data.enabled = false;
+						self.callApi({
+							resource : 'whitelabel.updateNotification',
+							data : {
+								accountId: self.accountId,
+								notificationId: templateKeyword,
+								data: templateData.data
+							},
+							success : function(textStatus, products) {
+								if('password_recovery' === templateKeyword) {
+									self.whitelabelDataGet(function(response) {
+										response.data.hidePasswordRecovery = true;
+										self.whitelabelDataUpdate(response.data, function(data) {
+											whitelabelData.doc = data.data;
+										});
+									});
+								}
+								show(true);
+								assert.success(self.i18n.active().whitelabel.alertMessages.templateUpdateSuccess);
+							}
+						});
+					}
+				}
+			});
+
+			$template.find('.action-bar .cancel').on('click', function() {
+				monster.ui.confirm(self.i18n.active().whitelabel.alertMessages.closeTemplateConfirm, function() {
+					show();
+				});
+			});
+		},
+
+		whitelabelDataGet: function(callback) {
+			var self = this;
+			self.callApi({
+				resource : 'whitelabel.get',
+				data : {
+					accountId: self.accountId,
+					generateError: false
+				},
+				success : function(response) {
+					if(typeof(callback) === 'function') {
+						callback(response);
+					}
+				}
+			});
+		},
+
+		whitelabelDataUpdate: function(data, callback) {
+			var self = this;
+			self.callApi({
+				resource : 'whitelabel.update',
+				data : {
+					accountId : self.accountId,
+					data : data.data,
+					generateError: false
+				},
+				success : function(response) {
+					if(typeof(callback) === 'function') {
+						callback(response);
+					}
+				}
+			});
+		},
+
+		menuSetActiveItem: function(screenKeyword) {
+			$('.js-sidebar-menu-link')
+				.removeClass('active')
+				.filter('[data-screen="' + screenKeyword + '"]').addClass('active');
+		},
+
 		advancedScreenRender: function(data, $parent) {
 			var self = this;
 
-			$('.js-sidebar-menu-link')
-				.removeClass('active')
-				.filter('[data-screen="advanced"]').addClass('active');
+			self.menuSetActiveItem('advanced');
 
 			var $html = $(monster.template(self, 'screen-advanced',
 				$.extend(true, {
@@ -308,7 +776,7 @@ define(function(require){
 							$parent.find('.js-favicon-preview').css('background-image', 'url(' + imageObj.src + ')').removeClass('image-empty');
 							$parent.find('.js-reset-favicon').show();
 						} else {
-							monster.ui.alert('error', self.i18n.active().alertMessages.faviconWrongSize);
+							monster.ui.alert('error', self.i18n.active().whitelabel.alertMessages.faviconWrongSize);
 							resetFavicon();
 						}
 					};
@@ -345,7 +813,7 @@ define(function(require){
 			});
 
 			$parent.find('.js-remove').on('click', function() {
-				monster.ui.confirm(data.i18n.active().alertMessages.deleteConfirm, function() {
+				monster.ui.confirm(data.i18n.active().whitelabel.alertMessages.deleteConfirm, function() {
 					self.callApi({
 						resource : 'whitelabel.delete',
 						data : {

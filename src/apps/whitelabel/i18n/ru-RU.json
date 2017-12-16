@@ -56,6 +56,67 @@
 				}
 			}
 		},
+		"templates": {
+			"mainTitle": "Manage Templates",
+			"templateNames": {
+				"reset_password": "Reset Password",
+				"welcome": "Welcome",
+				"new_account": "New Account",
+				"first_registration": "First Registration",
+				"first_call": "First Call",
+				"transaction": "Transaction",
+				"low_balance": "Low Balance",
+				"abnormal_hangup": "Abnormal Hangup",
+				"system_alert": "System Alert",
+				"deregister": "Deregister",
+				"fax_to_email": "Fax to Email",
+				"inbound_error_to_email": "Inbound Error to Email",
+				"inbound_to_email": "Inbound to Email",
+				"outbound_error_to_email": "Outbound Error to Email",
+				"outbound_to_email": "Outbound to Email",
+				"voicemail_to_email": "Voicemail to Email",
+				"voicemail_full": "Voicemail Full",
+				"new_port_request": "New Port Request",
+				"ported": "Ported",
+				"port_cancelled": "Port Cancelled",
+				"cnam_request": "CNAM Request",
+				"vanity_number_request": "Vanity Number Request"
+			},
+			"templateCategories": {
+				"account": "Account",
+				"billing": "Billing",
+				"system": "System",
+				"reseller": "Reseller/Account Alerts",
+				"fax": "Faxing",
+				"voicemail": "Voicemail",
+				"port_request": "Porting",
+				"numbers": "Number Management",
+				"misc": "Miscellaneous"
+			},
+			"from": "From:",
+			"to": "To:",
+			"bcc": "BCC:",
+			"subject": "Subject:",
+			"macros": "Macros",
+			"recipientTypes": {
+				"specified": "Specified: Write down a list of comma-separated e-mail addresses.",
+				"admins": "Admins: This e-mail will be sent to all the account administrators.",
+				"original": "Original User: This e-mail will be sent to the original user that triggered it."
+			},
+			"htmlBody": "HTML Body",
+			"textBody": "Plain Text Body",
+			"previewHeader": "You can preview this notification by sending a test e-mail to the following address:",
+			"previewEmail": "E-mail",
+			"previewSend": "Send",
+			"restoreButton": "Restore to default",
+			"restoreButtonDisabled": "No modification has been saved for this notification yet. If you want to keep the default notification, simply click on \"Cancel\".",
+			"restoreWarning": "This notification template will be restored to its default values, and any customization you made will be discarded.",
+			"editIconTooltips": {
+				"disabled": "DISABLED: This template has been disabled. No email will be sent by the system for this notification until you re-enable it.",
+				"custom": "CUSTOM: This template has been customized. Emails sent by the system for this notification will be using this custom template.",
+				"default": "DEFAULT: This template has not been customized. Emails sent by the system for this notification will be using the default template."
+			}
+		},
 		"alertMessages": {
 			"logoWrongType": "Your logo must be in either a JPEG or PNG format.",
 			"logoWrongSize": "Your logo must not exceed 192px in width and 62px in height.",

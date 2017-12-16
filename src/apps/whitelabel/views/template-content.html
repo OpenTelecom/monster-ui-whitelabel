@@ -1,0 +1,142 @@
+<div class="accordion-inner">
+	<div class="header">
+		<div class="pull-right">
+		{{#monsterSwitch}}
+			<input type="checkbox" class="js-switch switch" name="enabled" data-on="{{i18n.enabled}}" data-off="{{i18n.disabled}}" {{#if data.enabled}}checked="checked"{{/if}}>
+		{{/monsterSwitch}}
+		</div>
+		<div class="title">{{templateName}}</div>
+	</div>
+	<div class="content{{#unless data.enabled}} disabled{{/unless}}">
+		<form id="{{templateKey}}_form" class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label" for="from-field">{{i18n.whitelabel.templates.from}}</label>
+				<div class="controls">
+					<input id="from-field" type="text" name="from" value="{{data.from}}">
+				</div>
+			</div>
+			<div class="control-group js-form-group">
+				<label for="to-field" class="control-label">{{i18n.whitelabel.templates.to}}</label>
+				<div class="controls">
+					<input id="to-field" type="text" name="to.email_addresses" value="{{data.to.email_addresses}}" {{#compare data.to.type '!=' 'specified'}}disabled{{/compare}}>
+					<div class="btn-group recipient-radio-group to-group" data-toggle="buttons-radio">
+						<button class="recipient-radio btn {{#compare data.to.type '===' 'original'}}active{{/compare}}"
+								type="button" data-value="original" data-toggle="tooltip" data-placement="bottom"
+								data-original-title="{{i18n.whitelabel.templates.recipientTypes.original}}">
+							<i class="fa fa-user icon-small"></i>
+						</button>
+						<button class="recipient-radio btn {{#compare data.to.type '===' 'admins'}}active{{/compare}}"
+								type="button" data-value="admins" data-toggle="tooltip" data-placement="bottom"
+								data-original-title="{{i18n.whitelabel.templates.recipientTypes.admins}}">
+							<i class="fa fa-users icon-small"></i>
+						</button>
+						<button class="recipient-radio btn {{#compare data.to.type '===' 'specified'}}active{{/compare}}"
+								type="button" data-value="specified" data-toggle="tooltip" data-placement="bottom"
+								data-original-title="{{i18n.whitelabel.templates.recipientTypes.specified}}">
+							<i class="fa fa-edit icon-small"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="control-group js-form-group">
+				<label for="bcc-emails" class="control-label">{{i18n.whitelabel.templates.bcc}}</label>
+				<div class="controls">
+					<input id="bcc-emails" type="text" name="bcc.email_addresses" value="{{data.bcc.email_addresses}}" {{#compare data.bcc.type '!=' 'specified'}}disabled{{/compare}}>
+					<div class="btn-group recipient-radio-group bcc-group" data-toggle="buttons-radio">
+						<button class="recipient-radio btn {{#compare data.bcc.type '===' 'original'}}active{{/compare}}"
+								type="button" data-value="original" data-toggle="tooltip" data-placement="bottom"
+								data-original-title="{{i18n.whitelabel.templates.recipientTypes.original}}">
+							<i class="fa fa-user icon-small"></i>
+						</button>
+						<button class="recipient-radio btn {{#compare data.bcc.type '===' 'admins'}}active{{/compare}}"
+								type="button" data-value="admins" data-toggle="tooltip" data-placement="bottom"
+								data-original-title="{{i18n.whitelabel.templates.recipientTypes.admins}}">
+							<i class="fa fa-users icon-small"></i>
+						</button>
+						<button class="recipient-radio btn {{#compare data.bcc.type '===' 'specified'}}active{{/compare}}"
+								type="button" data-value="specified" data-toggle="tooltip" data-placement="bottom"
+								data-original-title="{{i18n.whitelabel.templates.recipientTypes.specified}}">
+							<i class="fa fa-edit icon-small"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">{{i18n.whitelabel.templates.subject}}</label>
+				<div class="controls">
+					<input id="{{templateKey}}_subject" type="text" name="subject" value="{{data.subject}}">
+					<div class="btn-group">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							{{i18n.whitelabel.templates.macros}}&nbsp;
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							{{#each macros}}
+							<li>
+								<a class="macro-element" data-macro="{{@key}}" data-target="#{{../templateKey}}_subject">{{friendly_name}}</a>
+							</li>
+							{{/each}}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<ul class="nav nav-tabs body-tabs">
+			<li class="tab-link active"><a href="#{{templateKey}}_html_tab">{{i18n.whitelabel.templates.htmlBody}}</a></li>
+			<li class="tab-link"><a href="#{{templateKey}}_text_tab">{{i18n.whitelabel.templates.textBody}}</a></li>
+		</ul>
+		 
+		<div class="tab-content">
+			<div class="tab-pane active" id="{{templateKey}}_html_tab">
+				<div class="js-wysiwyg-container wysiwyg-container"></div>
+			</div>
+			<div class="tab-pane" id="{{templateKey}}_text_tab">
+				<div class="template-text-header clearfix">
+					<div class="btn-group pull-right">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							{{i18n.whitelabel.templates.macros}}&nbsp;
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							{{#each macros}}
+							<li>
+								<a class="macro-element" data-macro="{{@key}}" data-target="#{{../templateKey}}_text_body">{{friendly_name}}</a>
+							</li>
+							{{/each}}
+						</ul>
+					</div>
+				</div>
+				<textarea id="{{templateKey}}_text_body" class="template-text-body"></textarea>
+			</div>
+		</div>
+	</div>
+	<div class="js-preview-email-container preview-email-container flat-box">
+		<div class="preview-email-header">
+			{{i18n.whitelabel.templates.previewHeader}}
+		</div>
+		<div class="preview-email-content">
+			<form id="{{templateKey}}_preview_form" class="form-horizontal">
+				<label class="control-label">{{i18n.whitelabel.templates.previewEmail}}</label>
+				<div class="controls">
+					<input id="{{templateKey}}_preview_recipient" type="email" placeholder="test@domain.com">
+					<button type="button" class="btn btn-primary js-preview-email-send">{{i18n.whitelabel.templates.previewSend}}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="action-bar clearfix">
+		<div class="pull-left">
+			{{#if data.account_overridden}}
+				<button type="button" class="btn btn-danger restore">{{i18n.whitelabel.templates.restoreButton}}</button>
+			{{else}}
+				<button type="button" class="btn btn-danger disabled" data-toggle="tooltip" data-placement="top" data-original-title="{{i18n.whitelabel.templates.restoreButtonDisabled}}">{{i18n.whitelabel.templates.restoreButton}}</button>
+			{{/if}}
+		</div>
+		<div class="pull-right buttons-wrapper">
+			<button type="button" class="btn js-cancel cancel">{{i18n.cancel}}</button>
+			<button type="button" class="btn btn-primary js-save save">{{i18n.save}}</button>
+		</div>
+	</div>
+</div>

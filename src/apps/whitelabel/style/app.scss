@@ -188,4 +188,104 @@
 		display: none;
 	}
 
+	.category-header {
+		margin-bottom: 6px;
+		cursor: pointer;
+	}
+
+	.category-header .fa {
+		width: 15px;
+		font-size: 22px;
+	}
+
+	.category-header .title {
+		font-size: 17px;
+	}
+
+	input, button, select, textarea {
+		font-family: 'Source Sans Pro', Helvetica, sans-serif;
+	}
+
+	.template-text-body {
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		width: 100%;
+		height: 262px !important;
+		resize: none;
+		border-radius: 0;
+		padding: 10px;
+		margin-bottom: 20px;
+	}
+
+	.pull-right > .dropdown-menu {
+		max-height: 200px;
+		overflow-y: auto;
+	}
+
+	.open > .dropdown-menu {
+		max-height: 100px;
+		overflow-y: auto;
+	}
+
+	.templates-branding-content {
+		max-width: 800px;
+
+		.form-horizontal {
+
+			.control-label {
+				width: 80px;
+			}
+
+			.controls {
+				margin-left: 90px;
+			}
+
+			input + .btn {
+				border-bottom-left-radius: 0;
+				border-top-left-radius: 0;
+			}
+		}
+
+		.accordion-inner .header {
+			margin-bottom: 10px;
+		}
+
+		.preview-email-container {
+			padding-top: 20px;
+
+			.preview-email-header {
+				margin-bottom: 15px;
+			}
+		}
+	}
+
+	.btn-group>.btn+.btn {
+		margin-left: 0;
+	}
+
+	.btn-group>.btn  {
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+	}
+}
+
+html *,
+html body,
+html input,
+html button,
+html select,
+html textarea {
+	font-family: 'Source Sans Pro', Helvetica, sans-serif;
+}
+
+#branding_templates_overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: .3;
 }
