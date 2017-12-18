@@ -1,5 +1,11 @@
 {
 	"whitelabel": {
+		"menu": {
+			"general": "General",
+			"advanced": "Advanced",
+			"templates": "Templates",
+			"dns": "DNS Helper"
+		},
 		"general": {
 			"title": "General UI Branding",
 			"logoLabel": "Company Logo",
@@ -115,6 +121,23 @@
 				"disabled": "DISABLED: This template has been disabled. No email will be sent by the system for this notification until you re-enable it.",
 				"custom": "CUSTOM: This template has been customized. Emails sent by the system for this notification will be using this custom template.",
 				"default": "DEFAULT: This template has not been customized. Emails sent by the system for this notification will be using the default template."
+			}
+		},
+		"dns": {
+			"check": "Check",
+			"label": "Domain name you wish to white-label:",
+			"info": "Base on your selection of {{variable}} as your domain name, please configure your DNS for the following setup:",
+			"table": {
+				"purpose": "Purpose",
+				"subDomain": "Sub-domain",
+				"recordType": "Record Type",
+				"expectedRecordData": "Expected Record Data",
+				"setupProperly": "Setup Properly"
+			},
+			"toastr": {
+				"error": {
+					"invalidDomain": "Please specify a domain name to check!"
+				}
 			}
 		},
 		"alertMessages": {

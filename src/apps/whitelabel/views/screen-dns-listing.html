@@ -1,0 +1,39 @@
+<p>
+	{{replaceVar i18n.whitelabel.dns.info domain}}
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>{{i18n.whitelabel.dns.table.purpose}}</th>
+			<th>{{i18n.whitelabel.dns.table.subDomain}}</th>
+			<th>{{i18n.whitelabel.dns.table.recordType}}</th>
+			<th>{{i18n.whitelabel.dns.table.expectedRecordData}}</th>
+			<th>{{i18n.whitelabel.dns.table.setupProperly}}</th>
+		</tr>
+	</thead>
+	<tbody>
+	{{#each data}}
+		{{#each this}}
+			<tr>
+				<td>{{name}}</td>
+				<td>{{@key}}</td>
+				<td>{{recordType}}</td>
+				<td>
+				{{#each expected}}
+					<div>{{this}}</div>
+				{{/each}}
+				</td>
+				<td>
+			{{#each errors}}
+				{{#if this}}
+					<div><i class="fa fa-exclamation-triangle monster-red"></i></div>
+				{{else}}
+					<div><i class="fa fa-check monster-green"></i></div>
+				{{/if}}
+			{{/each}}
+				</td>
+			</tr>
+		{{/each}}
+	{{/each}}
+	</tbody>
+</table>

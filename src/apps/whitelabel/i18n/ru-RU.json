@@ -1,132 +1,155 @@
 {
 	"whitelabel": {
+		"menu": {
+			"general": "Основные",
+			"advanced": "Дополнительные",
+			"templates": "Шаблоны",
+			"dns": "DNS-помощник"
+		},
 		"general": {
-			"title": "General UI Branding",
-			"logoLabel": "Company Logo",
-			"logoSize": "Maximum size: 192px by 62px",
-			"logoFormat": "Format: JPEG or PNG",
+			"title": "Основные настройки брендинга",
+			"logoLabel": "Логотип",
+			"logoSize": "Максимальный размер: 192 пикселя на 62 пикселя",
+			"logoFormat": "Формат: JPEG или PNG",
 			"faviconLabel": "Favicon",
-			"faviconSize": "Maximum size: 64px by 64px",
-			"companyNameLabel": "Company Name",
-			"companyWebsiteLabel": "Company Website Link",
-			"callReportEmail": "E-mail address for call reports",
-			"domainLabel": "Domain Name",
-			"languageLabel": "Language",
-			"helpLabel": "Help / Wiki Link",
-			"termsLabel": "Terms and Conditions Link",
-			"applicationTitle": "Browser Tab Name",
+			"faviconSize": "Максимальный размер: 64 пикселя на 64 пикселя",
+			"companyNameLabel": "Название компании",
+			"companyWebsiteLabel": "Ссылка на сайт компании",
+			"callReportEmail": "Email для отчетов по звонкам",
+			"domainLabel": "Домен",
+			"languageLabel": "Язык",
+			"helpLabel": "Помощь / Ссылка на Вики",
+			"termsLabel": "Ссылка на положения и условия",
+			"applicationTitle": "Заголовок окна браузера",
 			"poweredByLabel": "Powered by 2600hz",
-			"welcomeLabel": "Custom Welcome Message",
+			"welcomeLabel": "Изменить сообщение приветствия",
 			"realmSuffix": "Realm Suffix",
-			"realmSuffixHelp": "This suffix will be used to generate the account realms of accounts created via your white-labeled interface",
-			"resetBtnText": "Reset"
+			"realmSuffixHelp": "Этот суффикс будет использоваться для создания учетных областей учетных записей, созданных с помощью интерфейса брендирования",
+			"resetBtnText": "Сброс"
 		},
 		"advanced": {
-			"title": "Advanced Branding",
+			"title": "Продвинутые настройки брендирования",
 			"porting": {
-				"title": "Number Porting",
+				"title": "Отправка запросов порта",
 				"allowCustomerRequest": {
-					"title": "Submitting port requests:",
-					"yes": "Allow customers to request a port",
-					"no": "I will request ports on behalf of customers"
+					"title": "Управление запросами портов:",
+					"yes": "Позволить клиентам делать запросы",
+					"no": "Я буду запрашивать порты от имени клиентов"
 				},
 				"manageCustomerPorts": {
-					"title": "Managing port requests:",
-					"yes": "I will manage port requests from my account",
-					"no": "My provider will manage port requests from my account"
+					"title": "Управление запросами портов:",
+					"yes": "Я буду управлять запросами портов с моей учетной записи",
+					"no": "Мой провайдер будет управлять запросами портов из моей учетной записи"
 				},
-				"supportLabel": "Support Contact",
+				"supportLabel": "Контакты поддержки",
 				"supportPlaceholder": "support@domain.com",
-				"loaLabel": "Letter of Authorization",
+				"loaLabel": "Письмо авторизации",
 				"loaPlaceholder": "http://mycompany.com/loa",
 				"resporgLabel": "Resporg",
 				"resporgPlaceholder": "http://mycompany.com/resporg"
 			},
 			"carrier": {
-				"title": "Carrier",
+				"title": "Перевозчик",
 				"choices": {
-					"title": "Choices available to the user to setup the no_match route:",
+					"title": "Доступны пользователю для настройки маршрута no_match:",
 					"list": {
-						"useBlended": "Use Global Resources",
-						"useReseller": "Use Reseller Resources",
-						"byoc": "Bring Your Own Carrier"
+						"useBlended": "Использовать глобальные ресурсы",
+						"useReseller": "Использовать ресурсы реселлера",
+						"byoc": "Использовать свой собственный носитель"
 					},
-					"help1": "The first option is will be the one set by default in the account.",
-					"help2": "Enabling more than one option will let the user customize this setting."
+					"help1": "Первый вариант - это тот, который задан по умолчанию в учетной записи",
+					"help2": "Включение нескольких параметров позволит пользователю настроить этот параметр"
 				}
 			}
 		},
 		"templates": {
-			"mainTitle": "Manage Templates",
+			"mainTitle": "Управление шаблонами",
 			"templateNames": {
-				"reset_password": "Reset Password",
-				"welcome": "Welcome",
-				"new_account": "New Account",
-				"first_registration": "First Registration",
-				"first_call": "First Call",
-				"transaction": "Transaction",
-				"low_balance": "Low Balance",
-				"abnormal_hangup": "Abnormal Hangup",
-				"system_alert": "System Alert",
+				"reset_password": "Сбросить пароль",
+				"welcome": "Добро пожаловать",
+				"new_account": "Новая учетная запись",
+				"first_registration": "Первая регистрация",
+				"first_call": "Первый звонок",
+				"transaction": "Транзакция",
+				"low_balance": "Низкий баланс",
+				"abnormal_hangup": "Внезапный сброс",
+				"system_alert": "Системное предупреждение",
 				"deregister": "Deregister",
-				"fax_to_email": "Fax to Email",
-				"inbound_error_to_email": "Inbound Error to Email",
-				"inbound_to_email": "Inbound to Email",
-				"outbound_error_to_email": "Outbound Error to Email",
-				"outbound_to_email": "Outbound to Email",
-				"voicemail_to_email": "Voicemail to Email",
-				"voicemail_full": "Voicemail Full",
-				"new_port_request": "New Port Request",
-				"ported": "Ported",
-				"port_cancelled": "Port Cancelled",
-				"cnam_request": "CNAM Request",
-				"vanity_number_request": "Vanity Number Request"
+				"fax_to_email": "Fax в Email",
+				"inbound_error_to_email": "Входящая ошибка в электронной почте",
+				"inbound_to_email": "Входящие в электронную почту",
+				"outbound_error_to_email": "Исходящая ошибка в электронной почте",
+				"outbound_to_email": "Исходящая почта",
+				"voicemail_to_email": "Голосовая почта на Email",
+				"voicemail_full": "Голосовая почта переполнена",
+				"new_port_request": "Новый запрос порта",
+				"ported": "Портировано",
+				"port_cancelled": "Порт отменен",
+				"cnam_request": "CNAM - запрос",
+				"vanity_number_request": "Запрос красивого номера"
 			},
 			"templateCategories": {
-				"account": "Account",
-				"billing": "Billing",
-				"system": "System",
-				"reseller": "Reseller/Account Alerts",
-				"fax": "Faxing",
-				"voicemail": "Voicemail",
-				"port_request": "Porting",
-				"numbers": "Number Management",
-				"misc": "Miscellaneous"
+				"account": "Аккаунт",
+				"billing": "Биллинг",
+				"system": "Система",
+				"reseller": "Реселлер/Предупреждения аккаунта",
+				"fax": "Отправка факсов",
+				"voicemail": "Голосовая почта",
+				"port_request": "Портирование",
+				"numbers": "Управление номерами",
+				"misc": "Разное"
 			},
-			"from": "From:",
-			"to": "To:",
-			"bcc": "BCC:",
-			"subject": "Subject:",
-			"macros": "Macros",
+			"from": "От:",
+			"to": "Кому:",
+			"bcc": "Копия:",
+			"subject": "Тема сообщения:",
+			"macros": "Макросы",
 			"recipientTypes": {
-				"specified": "Specified: Write down a list of comma-separated e-mail addresses.",
-				"admins": "Admins: This e-mail will be sent to all the account administrators.",
-				"original": "Original User: This e-mail will be sent to the original user that triggered it."
+				"specified": "Специальный: запишите список разделенных запятыми адресов электронной почты",
+				"admins": "Администраторы: это электронное письмо будет отправлено всем администраторам аккаунтов",
+				"original": "Изначальный пользователь: Это электронное письмо будет отправлено изначальному пользователю, который его вызвал"
 			},
-			"htmlBody": "HTML Body",
-			"textBody": "Plain Text Body",
-			"previewHeader": "You can preview this notification by sending a test e-mail to the following address:",
-			"previewEmail": "E-mail",
-			"previewSend": "Send",
-			"restoreButton": "Restore to default",
-			"restoreButtonDisabled": "No modification has been saved for this notification yet. If you want to keep the default notification, simply click on \"Cancel\".",
-			"restoreWarning": "This notification template will be restored to its default values, and any customization you made will be discarded.",
+			"htmlBody": "HTML",
+			"textBody": "Текст",
+			"previewHeader": "Вы можете просмотреть это уведомление, отправив тестовое сообщение по следующему адресу:",
+			"previewEmail": "Email",
+			"previewSend": "Отправить",
+			"restoreButton": "Восстановить по-умолчанию",
+			"restoreButtonDisabled": "Никаких изменений для этого уведомления еще не было. Если вы хотите сохранить уведомление по умолчанию, просто нажмите \"Отмена\".",
+			"restoreWarning": "Этот шаблон уведомления будет восстановлен до значений по умолчанию, и любая сделанная вами настройка будет потеряна",
 			"editIconTooltips": {
-				"disabled": "DISABLED: This template has been disabled. No email will be sent by the system for this notification until you re-enable it.",
-				"custom": "CUSTOM: This template has been customized. Emails sent by the system for this notification will be using this custom template.",
-				"default": "DEFAULT: This template has not been customized. Emails sent by the system for this notification will be using the default template."
+				"disabled": "ОТКЛЮЧЕНО: этот шаблон был отключен. Система не отправляет электронное письмо для этого уведомления, пока вы его не включите",
+				"custom": "ИЗМЕНЕН: этот шаблон настроен. Письма, отправленные системой для этого уведомления, будут использовать этот настраиваемый шаблон",
+				"default": "ПО-УМОЛЧАНИЮ: этот шаблон не настроен. Письма, отправленные системой для этого уведомления, будут использовать шаблон по умолчанию"
+			}
+		},
+		"dns": {
+			"check": "Проверить",
+			"label": "Доменное имя, которое вы хотите присвоить бренду:",
+			"info": "Основываясь на вашем выборе {{variable}} в качестве вашего доменного имени, настройте DNS следующим образом:",
+			"table": {
+				"purpose": "Цель",
+				"subDomain": "Поддомен",
+				"recordType": "Тип записи",
+				"expectedRecordData": "Ожидаемые данные записи",
+				"setupProperly": "Настроено правильно"
+			},
+			"toastr": {
+				"error": {
+					"invalidDomain": "Пожалуйста, укажите доменное имя для проверки!"
+				}
 			}
 		},
 		"alertMessages": {
-			"logoWrongType": "Your logo must be in either a JPEG or PNG format.",
-			"logoWrongSize": "Your logo must not exceed 192px in width and 62px in height.",
-			"deleteConfirm": "This will completely delete both General and Advanced branding information. Do you want to continue?",
-			"closeTemplateConfirm": "Any unsaved change made to this template will be discarded. Do you want to continue?",
-			"templateUpdateSuccess": "Template updated successfully.",
-			"templatePreviewSuccess": "The notification preview has been sent to {{email_address}}",
-			"templateRestoreSuccess": "Template successfully restored to default.",
-			"iconWrongSize": "Your icon must not exceed 64px in width and 64px in height."
+			"logoWrongType": "Логотип должен быть в JPEG или PNG формате.",
+			"logoWrongSize": "Ваш логотип не должен превышать 192 пикселей в ширину и 62 пикселя в высоту",
+			"deleteConfirm": "Это полностью удалит как общую, так и расширенную информацию о брендинге. Вы хотите продолжить?",
+			"closeTemplateConfirm": "Все несохраненные изменения, внесенные в этот шаблон, будут отброшены. Продолжить?",
+			"templateUpdateSuccess": "Шаблон обновлен успешно",
+			"templatePreviewSuccess": "Предварительный просмотр уведомления был отправлен на {{email_address}}",
+			"templateRestoreSuccess": "Шаблон успешно восстановлен до исходного",
+			"iconWrongSize": "Ваш значок не должен превышать 64 пикселя в ширину и 64 пикселя в высоту"
 		},
-		"saveInfoMessage": "Some changes will only take effect after reloading the application."
+		"saveInfoMessage": "Некоторые изменения вступят в силу только после перезагрузки приложения"
 	}
 }

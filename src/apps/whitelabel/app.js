@@ -135,6 +135,8 @@ define(function(require){
 					self.templatesScreenRender(data, $parent);
 					break;
 				case 'dns':
+					self.dnsScreenRender(data, $parent);
+					break;
 				case 'general':
 				default:
 					self.generalScreenRender(data, $parent);
@@ -146,6 +148,86 @@ define(function(require){
 					container: 'body'
 				}
 			});
+		},
+
+		dnsScreenRender: function(data, $parent) {
+			var self = this;
+			var domain = null;
+
+			if(data.doc && data.doc.hasOwnProperty('realm_suffix')) {
+				domain = data.doc.realm_suffix;
+			}
+
+			self.menuSetActiveItem('dns');
+
+			var $html = $(monster.template(self, 'screen-dns', {
+				i18n: self.i18n.active(),
+				domain: domain
+			}));
+
+			$parent.empty().append($html);
+
+			if(domain) {
+				self.dnsScreenRenderListing(data, $parent, domain);
+			}
+
+			self.dnsScreenBindEvents($parent, data);
+		},
+
+		dnsScreenBindEvents: function($parent, data) {
+			var self = this;
+			$parent.find('.check').on('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				var domain = $(this).parent().find('#domain').val();
+				if (domain) {
+					self.dnsScreenRenderListing(data, $parent, domain);
+				} else {
+					monster.ui.alert('error', self.i18n.active().whitelabel.dns.toastr.error.invalidDomain);
+				}
+			});
+
+			$parent.find('.js-dns-form').on('submit', function(e){
+				e.preventDefault();
+				var domain = $(this).find('#domain').val();
+				if (domain) {
+					self.dnsScreenRenderListing(data, $parent, domain);
+				} else {
+					monster.ui.alert('error', self.i18n.active().whitelabel.dns.toastr.error.invalidDomain);
+				}
+			})
+		},
+
+		dnsScreenRenderListing: function(data, $parent, domain) {
+			var self = this;
+			self.callApi({
+				resource : 'whitelabel.checkDnsEntries',
+				data : {
+					accountId : self.accountId,
+					domain : domain
+				},
+				success : function(response, textStatus) {
+					var $html = $(monster.template(self, 'screen-dns-listing', {
+						data : self.dnsScreenFormatData(response.data),
+						domain : domain
+					}));
+					$parent.find('.js-dns-listing-content').empty().append($html);
+				}
+			});
+		},
+
+		dnsScreenFormatData: function(data) {
+			$.each(data, function(i, data) {
+				$.each(data, function(i, data) {
+					data.recordType = i;
+					data.errors = [];
+					data.expected.forEach(function(value, index) {
+						data.errors.push(data.actual.indexOf(value) < 0);
+					});
+				});
+			});
+
+			return data;
 		},
 
 		generalScreenRender: function(data, $parent) {
@@ -522,12 +604,12 @@ define(function(require){
 				});
 			});
 
-			$template.find(".js-save").on("click", function() {
-				if($switch.prop("checked")) {
+			$template.find('.js-save').on('click', function() {
+				if($switch.prop('checked')) {
 					var item = getFormattedFormData();
 					item.enabled = true;
 					self.callApi({
-						resource : "whitelabel.updateNotification",
+						resource : 'whitelabel.updateNotification',
 						data : {
 							accountId: self.accountId,
 							notificationId: templateKeyword,
@@ -535,15 +617,15 @@ define(function(require){
 						},
 						success : function(textStatus, products) {
 							self.callApi({
-								resource : "whitelabel.updateNotificationHtml",
+								resource : 'whitelabel.updateNotificationHtml',
 								data : {
 									accountId : self.accountId,
 									notificationId : templateKeyword,
-									data : $template.find(".wysiwyg-editor").cleanHtml()
+									data : $template.find('.wysiwyg-editor').cleanHtml()
 								},
 								success : function(textStatus, products) {
 									self.callApi({
-										resource : "whitelabel.updateNotificationText",
+										resource : 'whitelabel.updateNotificationText',
 										data : {
 											accountId: self.accountId,
 											notificationId: templateKeyword,
