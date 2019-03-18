@@ -25,7 +25,7 @@
 				"Изменить язык по-умолчанию",
 				"Указать собственное имя компании",
 				"Изменить сообщение-приветствие",
-				"Изменить Портирование и Carriers settings",
+				"Изменить настройки портирования и используемых ресурсов",
 				"Управлять шаблонами для уведоблений по email"
 			]
 		}
@@ -36,13 +36,15 @@
 	],
 	"api_url": "",
 	"icon": "whitelabel.png",
-	"author": "Telux",
+	"author": "(C) 2017-2018 SIPLABS LLC (C) 2019 CONVERBA LIMITED",
 	"version": "1.0",
 	"license": "-",
 	"price": 0,
 	"screenshots": [
-		"screen_1.png",
-		"screen_2.png"
+		"screenshot_1.png",
+		"screenshot_2.png",
+		"screenshot_3.png",
+		"screenshot_4.png"
 	],
 	"urls": {
 		"documentation": "{documentation_url}",

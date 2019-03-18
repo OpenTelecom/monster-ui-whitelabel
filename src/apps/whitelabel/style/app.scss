@@ -275,16 +275,12 @@
 	}
 }
 
-html *,
-html body,
-html input,
-html button,
-html select,
-html textarea {
+.whitelabel-app ,
+.whitelabel-app .whitelabel-container *:not(.fa) {
 	font-family: 'Source Sans Pro', Helvetica, sans-serif;
 }
 
-#branding_templates_overlay {
+.whitelabel-app #branding_templates_overlay {
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -292,4 +288,10 @@ html textarea {
 	height: 100%;
 	background-color: #000;
 	opacity: .3;
+}
+
+@media (max-width: 767px) {
+	.whitelabel-content {
+		padding-left: 25px;
+	}
 }

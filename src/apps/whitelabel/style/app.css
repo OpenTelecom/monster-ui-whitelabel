@@ -1,0 +1,282 @@
+.whitelabel-container.app-container {
+    padding-top: 20px;
+}
+
+.whitelabel-container .whitelabel-content > h1 {
+    font-size: 22px;
+    font-weight: normal;
+    color: #555;
+    margin-top: 0;
+    line-height: 1;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 7px;
+    margin-bottom: 15px;
+}
+
+.whitelabel-container .whitelabel-content h2 {
+    font-size: 19px;
+    font-weight: normal;
+    color: #555;
+    margin-top: 0;
+    line-height: 1.2;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 7px;
+    margin-bottom: 13px;
+}
+
+.whitelabel-container .sidebar-menu ul {
+    list-style-type: none;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #DCDCDC;
+}
+
+.whitelabel-container .sidebar-menu ul li a {
+    color: #555;
+    display: block;
+    font-size: 16px;
+    position: relative;
+    padding: 15px 30px 15px 17px;
+    /*border: 1px solid #DCDCDC;*/
+    border-bottom: 1px solid #e3e3e3;
+    background: #f3f3f3;
+    background: -moz-linear-gradient(top, #f3f3f3 0%, #f7f7f7 49%, #ffffff 100%);
+    background: -webkit-linear-gradient(top, #f3f3f3 0%, #f7f7f7 49%, #ffffff 100%);
+    background: linear-gradient(to bottom, #f3f3f3 0%, #f7f7f7 49%, #ffffff 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f3f3f3", endColorstr="#ffffff", GradientType=0);
+}
+
+.whitelabel-container .sidebar-menu ul li a.active, .whitelabel-container .sidebar-menu ul li a:hover {
+    background: #22A5FF;
+    color: white;
+}
+
+.whitelabel-container .sidebar-menu ul li a.active .fa, .whitelabel-container .sidebar-menu ul li a:hover .fa {
+    color: white;
+}
+
+.whitelabel-container .sidebar-menu ul li a.active::after, .whitelabel-container .sidebar-menu ul li a:hover::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #22A5FF;
+    position: absolute;
+    right: -10px;
+    top: 16px;
+}
+
+.whitelabel-container .sidebar-menu ul li a .fa {
+    color: #555;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.whitelabel-container .sidebar-menu ul li:last-child a {
+    border-bottom: none;
+    border-radius: 0 0 4px 4px;
+}
+
+.whitelabel-container .sidebar-menu ul li:first-child a {
+    border-radius: 4px 4px 0 0;
+}
+
+.whitelabel-container .controls .file-upload {
+    margin-right: 10px;
+}
+
+.whitelabel-container .control-group .info-message-wrapper {
+    max-width: 350px;
+}
+
+.whitelabel-container .help-box .text-wrapper {
+    font-size: 14px;
+}
+
+.whitelabel-container .welcome-message-container {
+    margin-top: 20px;
+}
+
+.whitelabel-container .buttons-wrapper {
+    margin-bottom: 15px;
+}
+
+.whitelabel-container .buttons-wrapper .btn {
+    margin-right: 10px;
+}
+
+.whitelabel-container form label.error {
+    color: red;
+}
+
+.whitelabel-container form .form-section {
+    margin-bottom: 15px;
+    padding-left: 40px;
+}
+
+.whitelabel-container form .form-section > h2 {
+    margin-left: -20px;
+}
+
+.whitelabel-container .help-box {
+    max-width: 668px;
+    margin-bottom: 20px;
+}
+
+.whitelabel-container .choices-list {
+    list-style: none;
+    padding: 11px 0 5px;
+    margin-bottom: 0;
+    margin-left: 0;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.whitelabel-container .choices-list .choices-element {
+    margin-bottom: 6px;
+}
+
+.whitelabel-container .choices-element.clickable-box {
+    background: #EEEEEE;
+    padding: 10px 15px;
+    border-radius: 7px;
+}
+
+.whitelabel-container .choices-list-help {
+    display: inline-block;
+    vertical-align: top;
+    margin: 12px 0 0 30px;
+    max-width: 300px;
+}
+
+.whitelabel-container .form-vertical .control-label {
+    font-size: 16px;
+}
+
+.whitelabel-container .image-preview {
+    display: inline-block;
+    margin-top: 5px;
+    vertical-align: top;
+    border: 1px solid #303039;
+}
+
+.whitelabel-container .logo-preview {
+    width: 192px;
+    height: 62px;
+}
+
+.whitelabel-container .icon-preview {
+    width: 64px;
+    height: 64px;
+}
+
+.whitelabel-container .image-empty {
+    display: none;
+}
+
+.whitelabel-container .category-header {
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+.whitelabel-container .category-header .fa {
+    width: 15px;
+    font-size: 22px;
+}
+
+.whitelabel-container .category-header .title {
+    font-size: 17px;
+}
+
+.whitelabel-container input, .whitelabel-container button, .whitelabel-container select, .whitelabel-container textarea {
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
+.whitelabel-container .template-text-body {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    height: 262px !important;
+    resize: none;
+    border-radius: 0;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.whitelabel-container .pull-right > .dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.whitelabel-container .open > .dropdown-menu {
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.whitelabel-container .templates-branding-content {
+    max-width: 800px;
+}
+
+.whitelabel-container .templates-branding-content .form-horizontal .control-label {
+    width: 80px;
+}
+
+.whitelabel-container .templates-branding-content .form-horizontal .controls {
+    margin-left: 90px;
+}
+
+.whitelabel-container .templates-branding-content .form-horizontal input + .btn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.whitelabel-container .templates-branding-content .accordion-inner .header {
+    margin-bottom: 10px;
+}
+
+.whitelabel-container .templates-branding-content .preview-email-container {
+    padding-top: 20px;
+}
+
+.whitelabel-container .templates-branding-content .preview-email-container .preview-email-header {
+    margin-bottom: 15px;
+}
+
+.whitelabel-container .btn-group > .btn + .btn {
+    margin-left: 0;
+}
+
+.whitelabel-container .btn-group > .btn {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.whitelabel-container table.table {
+    border: 0;
+}
+
+.whitelabel-app,
+.whitelabel-app .whitelabel-container *:not(.fa) {
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
+.whitelabel-app #branding_templates_overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.3;
+}
+
+@media (max-width: 767px) {
+    .whitelabel-content {
+        padding-left: 25px;
+    }
+}
