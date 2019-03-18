@@ -1,7 +1,7 @@
 define(function(require){
 	var $ = require('jquery'),
 		monster = require('monster'),
-		assert = require("toastr");
+		assert = require('toastr');
 
 	require([
 		'fileupload'
@@ -17,14 +17,7 @@ define(function(require){
 			'ru-RU': { customCss: false }
 		},
 
-		requests: {
-			/*
-			'google.getUser': {
-				apiRoot: 'http://api.google.com/',
-				url: 'users',
-				verb: 'PUT'
-			}*/
-		},
+		requests: {},
 
 		load: function(callback){
 			var self = this;
@@ -95,6 +88,8 @@ define(function(require){
 		render: function(_container, tabKeyword) {
 			var self = this,
 				$container = _container || $('#monster_content');
+
+			$(document.body).addClass('whitelabel-app'); // For styles
 
 			if(typeof(tabKeyword) === 'undefined') {
 				tabKeyword = 'general';
@@ -241,7 +236,7 @@ define(function(require){
 					logo: data.logo,
 					icon: data.icon
 				}, data)
-				));
+			));
 
 			$parent.empty().append($html);
 
@@ -891,7 +886,6 @@ define(function(require){
 				var $form = $(this).closest('form');
 				e.preventDefault();
 				self.generalScreenFormSave($form, whitelabelData, logo, icon);
-
 			});
 
 			$parent.find('.js-remove').on('click', function() {
@@ -1071,44 +1065,18 @@ define(function(require){
 					});
 				},
 				logo: function (callback) {
-					var xmlhttp = new XMLHttpRequest;
-					var logoUrl = self.apiUrl + 'accounts/' + self.accountId + '/whitelabel/logo?auth_token=' + monster.util.getAuthToken();
-					xmlhttp.open('GET', logoUrl, true);
-					xmlhttp.onreadystatechange = function() {
-						if (4 === xmlhttp.readyState) {
-							if (200 === xmlhttp.status) {
-								if(typeof(callback) === 'function') {
-									callback(null, logoUrl);
-								}
-							} else {
-								if(typeof(callback) === 'function') {
-									callback(null, null);
-								}
-							}
-						}
-					};
-					xmlhttp.send();
+					var logoUrl = self.apiUrl + 'accounts/' + self.accountId + '/whitelabel/logo?auth_token='
+						+ monster.util.getAuthToken()  + '&_=' + self.getRandomString();
+					if(typeof(callback) === 'function') {
+						callback(null, logoUrl);
+					}
 				},
 				icon: function (callback) {
-					self.callApi({
-						resource: 'whitelabel.getIcon',
-						data: {
-							accountId: self.accountId,
-							generateError: false,
-							dataType : "*"
-						},
-						success: function (response) {
-							var iconUrl = self.apiUrl + 'accounts/' + self.accountId + '/whitelabel/icon?auth_token=' + monster.util.getAuthToken();
-							if(typeof(callback) === 'function') {
-								callback(null, iconUrl);
-							}
-						},
-						error: function(textStatus) {
-							if(typeof(callback) === 'function') {
-								callback(null, null);
-							}
-						}
-					});
+					var iconUrl = self.apiUrl + 'accounts/' + self.accountId + '/whitelabel/icon?auth_token='
+						+ monster.util.getAuthToken() + '&_=' + self.getRandomString();
+					if(typeof(callback) === 'function') {
+						callback(null, iconUrl);
+					}
 				},
 				passwordRecovery: function (callback) {
 					self.callApi({
@@ -1129,9 +1097,6 @@ define(function(require){
 					});
 				}
 			}, function (err, results) {
-				console.log('Results:');
-				console.log(results);
-
 				if (results.doc
 					&& results.passwordRecovery
 					&& results.passwordRecovery.enabled === false) {
@@ -1144,6 +1109,9 @@ define(function(require){
 					callback(results);
 				}
 			});
+		},
+		getRandomString: function(){
+			return Math.random().toString(36).substring(7);
 		}
 	};
 

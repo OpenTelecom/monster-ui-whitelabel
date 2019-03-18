@@ -25,7 +25,7 @@
 				"Изменить язык по-умолчанию",
 				"Указать собственное имя компании",
 				"Изменить сообщение-приветствие",
-				"Изменить Портирование и Carriers settings",
+				"Изменить настройки портирования и используемых ресурсов",
 				"Управлять шаблонами для уведоблений по email"
 			]
 		}
@@ -41,8 +41,10 @@
 	"license": "-",
 	"price": 0,
 	"screenshots": [
-		"screen_1.png",
-		"screen_2.png"
+		"screenshot_1.png",
+		"screenshot_2.png",
+		"screenshot_3.png",
+		"screenshot_4.png"
 	],
 	"urls": {
 		"documentation": "{documentation_url}",
